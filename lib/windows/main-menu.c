@@ -5,8 +5,6 @@
 Window *createMainMenuWindow()
 {
   Window *win = createWindow();
-  HeaderComponent *hc = createHeaderComponent();
-  hc->text = strdup("Main Menu");
-  addComponent(win->cm, hc);
+  addComponent(win->cm, createHeaderComponent("Main Menu"));
   return win;
 }

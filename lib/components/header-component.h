@@ -35,6 +35,6 @@ void destroyHeaderComponent(Component *_hc);
  * \brief Creates a new header component.
  * \return A header component.
  */
-HeaderComponent *createHeaderComponent();
+HeaderComponent *createHeaderComponent(char text[]);
 
 #endif // HEADER_COMPONENT_H

@@ -25,7 +25,7 @@ void destroyHeaderComponent(Component *_hc)
   free(hc);
 }
 
-HeaderComponent *createHeaderComponent()
+HeaderComponent *createHeaderComponent(char text[])
 {
   HeaderComponent *hc = malloc(sizeof(HeaderComponent));
   hc->proto = createComponentPrototype();
@@ -36,6 +36,6 @@ HeaderComponent *createHeaderComponent()
   hc->proto->logic = logicHeaderComponent;
   hc->proto->render = renderHeaderComponent;
   hc->proto->destroy = destroyHeaderComponent;
-  hc->text = strdup("");
+  hc->text = strdup(text);
   return hc;
 }
