@@ -139,7 +139,7 @@ void destroyTextInputComponent(Component *_tic)
   free(tic);
 }
 
-TextInputComponent *createTextInputComponent(char label[], char value[], char eventName[])
+TextInputComponent *createTextInputComponent(char label[], char value[], char eventName[], char **outValue)
 {
   TextInputComponent *tic = malloc(sizeof(TextInputComponent));
   tic->proto = createComponentPrototype();
@@ -151,6 +151,7 @@ TextInputComponent *createTextInputComponent(char label[], char value[], char ev
   tic->proto->destroy = destroyTextInputComponent;
   tic->label = strdup(label);
   tic->value = strdup(value);
+  *outValue = tic->value;
   tic->curpos = strlen(value);
   tic->valueAllocSize = strlen(value);
   if (tic->valueAllocSize == 0)

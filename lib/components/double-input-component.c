@@ -147,7 +147,7 @@ void destroyDoubleInputComponent(Component *_dic)
   free(dic);
 }
 
-DoubleInputComponent *createDoubleInputComponent(char label[], double value, char eventName[])
+DoubleInputComponent *createDoubleInputComponent(char label[], double value, char eventName[], double **outValue)
 {
   DoubleInputComponent *dic = malloc(sizeof(DoubleInputComponent));
   dic->proto = createComponentPrototype();
@@ -158,6 +158,7 @@ DoubleInputComponent *createDoubleInputComponent(char label[], double value, cha
   dic->proto->render = renderDoubleInputComponent;
   dic->proto->destroy = destroyDoubleInputComponent;
   dic->label = strdup(label);
+  *outValue = &dic->value;
 
   char valueString[100];
   sprintf(valueString, "%.2lf", value);

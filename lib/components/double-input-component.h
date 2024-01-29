@@ -39,6 +39,6 @@ void destroyDoubleInputComponent(Component *_tic);
  * \brief Creates a new double input component.
  * \return A double input component.
  */
-DoubleInputComponent *createDoubleInputComponent(char label[], double value, char eventName[]);
+DoubleInputComponent *createDoubleInputComponent(char label[], double value, char eventName[], double **outValue);
 
 #endif // DOUBLE_INPUT_COMPONENT_H

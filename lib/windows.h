@@ -4,6 +4,6 @@
 #include "components.h"
 
 Window *createMainMenuWindow();
-Window *createInsertUserWindow();
+Window *createInsertUserWindow(void **data);
 
 #endif // WINDOWS_H

@@ -1,12 +1,13 @@
 #include "lib/components.h"
 #include "lib/windows.h"
+#include "lib/user.h"
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
 
 void init();
 char *logic(WindowManager *wm, int charInput);
-void handleEvent(WindowManager *wm, char *eventName, FILE *fp);
+void handleEvent(WindowManager *wm, char *eventName, FILE *fp, void **data);
 void render(WindowManager *wm);
 int input();
 void cleanup();
@@ -19,6 +20,7 @@ int main()
   WindowManager *wm = createWindowManager();
   pushWindow(wm, createMainMenuWindow());
   char *eventName = NULL;
+  void **data = malloc(sizeof(void *));
   int charInput = 0;
   FILE *fp = NULL;
 
@@ -33,7 +35,7 @@ int main()
     }
 
     // Events
-    handleEvent(wm, eventName, fp);
+    handleEvent(wm, eventName, fp, data);
 
     // Render
     render(wm);
@@ -126,7 +128,7 @@ char *logic(WindowManager *wm, int charInput)
   return eventName;
 }
 
-void handleEvent(WindowManager *wm, char *eventName, FILE *fp)
+void handleEvent(WindowManager *wm, char *eventName, FILE *fp, void **data)
 {
   if (eventName == NULL)
   {
@@ -135,13 +137,14 @@ void handleEvent(WindowManager *wm, char *eventName, FILE *fp)
 
   if (strcmp(eventName, "submit-user") == 0)
   {
-    printf("User submitted!");
+    User *user = (User *)*data;
+    printf("User: %s %s with %.2lf wage!\n", user->name, user->surname, (*user->wage));
     popWindow(wm);
   }
 
   if (strcmp(eventName, "open-insert-user-window") == 0)
   {
-    pushWindow(wm, createInsertUserWindow());
+    pushWindow(wm, createInsertUserWindow(data));
   }
 }
 
