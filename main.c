@@ -6,7 +6,7 @@
 
 void init();
 char *logic(WindowManager *wm, int charInput);
-void handleEvent(char *eventName, FILE *fp);
+void handleEvent(WindowManager *wm, char *eventName, FILE *fp);
 void render(WindowManager *wm);
 int input();
 void cleanup();
@@ -33,7 +33,7 @@ int main()
     }
 
     // Events
-    handleEvent(eventName, fp);
+    handleEvent(wm, eventName, fp);
 
     // Render
     render(wm);
@@ -126,11 +126,22 @@ char *logic(WindowManager *wm, int charInput)
   return eventName;
 }
 
-void handleEvent(char *eventName, FILE *fp)
+void handleEvent(WindowManager *wm, char *eventName, FILE *fp)
 {
   if (eventName == NULL)
   {
     return;
+  }
+
+  if (strcmp(eventName, "submit-user") == 0)
+  {
+    printf("User submitted!");
+    popWindow(wm);
+  }
+
+  if (strcmp(eventName, "open-insert-user-window") == 0)
+  {
+    pushWindow(wm, createInsertUserWindow());
   }
 }
 
