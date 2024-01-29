@@ -137,8 +137,9 @@ void handleEvent(WindowManager *wm, char *eventName, FILE *fp, void **data)
 
   if (strcmp(eventName, "submit-user") == 0)
   {
-    User *user = (User *)*data;
-    printf("User: %s %s with %.2lf wage!\n", user->name, user->surname, (*user->wage));
+    InsertUserData *iud = (InsertUserData *)*data;
+    User *user = createUser(iud->name, iud->surname, *iud->wage);
+    printf("User: %s %s with %.2lf wage!\n", user->name, user->surname, user->wage);
     popWindow(wm);
   }
 

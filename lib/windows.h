@@ -2,8 +2,8 @@
 #define WINDOWS_H
 
 #include "components.h"
+#include "windows/insert-user.h"
 
 Window *createMainMenuWindow();
-Window *createInsertUserWindow(void **data);
 
 #endif // WINDOWS_H

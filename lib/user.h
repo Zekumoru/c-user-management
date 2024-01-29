@@ -5,10 +5,10 @@ typedef struct User
 {
   char *name;
   char *surname;
-  double *wage;
+  double wage;
 } User;
 
-User *createUser();
+User *createUser(char *name, char *surname, double wage);
 void destroyUser(User *user);
 
 #endif // USER_H
