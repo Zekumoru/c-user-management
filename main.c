@@ -58,37 +58,24 @@ void init()
   curs_set(0);
 }
 
-bool focusComponent(ComponentManager *cm, size_t i, bool *found, StubComponent *prevFocusedComponent)
-{
-  StubComponent *component = (StubComponent *)cm->components[i];
-  if (component->proto->focusable)
-  {
-    *found = true;
-    prevFocusedComponent->proto->hasFocus = false;
-    cm->indexFocusedComponent = i;
-    component->proto->hasFocus = true;
-    return true;
-  }
-  return false;
-}
-
 char *logic(WindowManager *wm, int charInput)
 {
   ComponentManager *cm = wm->current->cm;
   int index = cm->indexFocusedComponent;
   StubComponent *focusedComponent = (StubComponent *)cm->components[index];
-  bool found = false;
 
   char *eventName = focusedComponent->proto->logic(focusedComponent, charInput);
 
+  bool found = false;
   switch (charInput)
   {
   // find the previous focusable component
   case KEY_UP:
     for (int i = index - 1; i >= 0; i--)
     {
-      if (focusComponent(cm, i, &found, focusedComponent))
+      if (focusComponent(cm, i))
       {
+        found = true;
         break;
       }
     }
@@ -96,7 +83,7 @@ char *logic(WindowManager *wm, int charInput)
     // if not found then start from zero the search
     for (int i = cm->size - 1; i > index && !found; i--)
     {
-      if (focusComponent(cm, i, &found, focusedComponent))
+      if (focusComponent(cm, i))
       {
         break;
       }
@@ -109,8 +96,9 @@ char *logic(WindowManager *wm, int charInput)
   case KEY_DOWN:
     for (int i = index + 1; i < cm->size; i++)
     {
-      if (focusComponent(cm, i, &found, focusedComponent))
+      if (focusComponent(cm, i))
       {
+        found = true;
         break;
       }
     }
@@ -118,7 +106,7 @@ char *logic(WindowManager *wm, int charInput)
     // if not found then start from zero the search
     for (int i = 0; i < index && !found; i++)
     {
-      if (focusComponent(cm, i, &found, focusedComponent))
+      if (focusComponent(cm, i))
       {
         break;
       }
