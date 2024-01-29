@@ -11,6 +11,7 @@ typedef struct TextInputComponent
   ComponentPrototype *proto;
   char *label;
   char *value;
+  size_t valueAllocSize;
   size_t curpos;
 } TextInputComponent;
 
