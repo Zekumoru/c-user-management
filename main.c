@@ -140,6 +140,20 @@ void render(WindowManager *wm)
     component->proto->render(component);
   }
 
+  // set cursor position on the screen (or hide it for that matter)
+  StubComponent *focusedComponent = (StubComponent *)cm->components[cm->indexFocusedComponent];
+  int setcurX = focusedComponent->proto->setcurX;
+  int setcurY = focusedComponent->proto->setcurY;
+  if (setcurX >= 0 && setcurY >= 0)
+  {
+    curs_set(1);
+    move(setcurY, setcurX);
+  }
+  else
+  {
+    curs_set(0);
+  }
+
   refresh();
 }
 

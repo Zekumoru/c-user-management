@@ -6,5 +6,6 @@
 #include "stub-component.h"
 #include "header-component.h"
 #include "menu-item-component.h"
+#include "text-input-component.h"
 
 #endif // COMPONENTS_COMPONENTS_H

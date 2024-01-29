@@ -14,6 +14,9 @@ typedef struct ComponentPrototype
   bool focusable;
   bool hasFocus;
   bool arrowsSuppressed;
+  // set cursor to these coordinates after all components have rendered
+  int setcurX;
+  int setcurY;
   char *(*logic)(Component *, int);
   void (*render)(Component *);
   void (*destroy)(Component *);

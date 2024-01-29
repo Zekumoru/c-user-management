@@ -10,6 +10,7 @@ Window *createMainMenuWindow()
   mic->proto->hasFocus = true;
   win->cm->indexFocusedComponent = 1;
   addComponent(win->cm, mic);
+  addComponent(win->cm, createTextInputComponent("Label", "", "label-test"));
   addComponent(win->cm, createMenuItemComponent("Delete user", "open-delete-user-window"));
   addComponent(win->cm, createMenuItemComponent("Find user", "open-find-user-window"));
   addComponent(win->cm, createMenuItemComponent("Modify user", "open-modify-user-window"));
