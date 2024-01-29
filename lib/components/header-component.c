@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-void logicHeaderComponent(Component *_hc, int charInput)
+char *logicHeaderComponent(Component *_hc, int charInput)
 {
   HeaderComponent *hc = (HeaderComponent *)_hc;
+  return NULL;
 }
 
 void renderHeaderComponent(Component *_hc)

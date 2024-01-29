@@ -13,7 +13,7 @@ typedef struct ComponentPrototype
   char *eventName;
   bool focusable;
   bool hasFocus;
-  void (*logic)(Component *, int);
+  char *(*logic)(Component *, int);
   void (*render)(Component *);
   void (*destroy)(Component *);
 } ComponentPrototype;

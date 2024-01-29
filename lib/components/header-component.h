@@ -15,8 +15,9 @@ typedef struct HeaderComponent
 /**
  * \brief Logic code for header component.
  * \param hc A header component.
+ * \return An event name.
  */
-void logicHeaderComponent(Component *_hc, int charInput);
+char *logicHeaderComponent(Component *_hc, int charInput);
 
 /**
  * \brief Render code for header component.
