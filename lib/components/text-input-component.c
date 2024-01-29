@@ -14,6 +14,12 @@ char *logicTextInputComponent(Component *_tic, int charInput)
     return NULL;
   }
 
+  // handle enter
+  if (charInput == KEY_ENTER || charInput == '\n' || charInput == '\r')
+  {
+    return tic->proto->eventName;
+  }
+
   // handle moving through the string
   if (charInput == KEY_LEFT && tic->curpos > 0)
   {
