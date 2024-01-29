@@ -29,6 +29,7 @@ HeaderComponent *createHeaderComponent()
   HeaderComponent *hc = malloc(sizeof(HeaderComponent));
   hc->proto = createComponentPrototype();
   hc->proto->type = strdup("HeaderComponent");
+  hc->proto->eventName = NULL;
   hc->proto->focusable = false;
   hc->proto->hasFocus = false;
   hc->proto->logic = logicHeaderComponent;

@@ -10,6 +10,7 @@
 typedef struct ComponentPrototype
 {
   char *type;
+  char *eventName;
   bool focusable;
   bool hasFocus;
   void (*logic)(Component *, int);
