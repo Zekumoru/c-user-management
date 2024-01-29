@@ -49,6 +49,7 @@ int main()
   }
 
   // Cleanup and exit
+  destroyWindowManager(wm);
   free(eventName);
   cleanup();
   return 0;

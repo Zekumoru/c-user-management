@@ -30,5 +30,6 @@ WindowManager *createWindowManager();
 
 void pushWindow(WindowManager *wm, Window *win);
 void popWindow(WindowManager *wm);
+void destroyWindowManager(WindowManager *wm);
 
 #endif // COMPONENTS_WINDOWS_H

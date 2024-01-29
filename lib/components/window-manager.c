@@ -26,3 +26,12 @@ void popWindow(WindowManager *wm)
   wm->size--;
   wm->current = wm->windows[wm->size - 1];
 }
+
+void destroyWindowManager(WindowManager *wm)
+{
+  for (int i = wm->size - 1; i >= 0; i--)
+  {
+    destroyWindow(wm->windows[i]);
+  }
+  free(wm);
+}
