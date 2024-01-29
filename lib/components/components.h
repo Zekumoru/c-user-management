@@ -5,5 +5,6 @@
 #include "component-prototype.h"
 #include "stub-component.h"
 #include "header-component.h"
+#include "menu-item-component.h"
 
 #endif // COMPONENTS_COMPONENTS_H
