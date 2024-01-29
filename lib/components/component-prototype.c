@@ -8,6 +8,7 @@ ComponentPrototype *createComponentPrototype()
   proto->eventName = NULL;
   proto->focusable = false;
   proto->hasFocus = false;
+  proto->arrowsSuppressed = false;
   proto->logic = NULL;
   proto->render = NULL;
   proto->destroy = NULL;
