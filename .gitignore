@@ -1,0 +1,9 @@
+# Ignore output files
+out/
+output/
+
+# Ignore vscode config
+.vscode/
+
+# Ignore executables
+*.exe
