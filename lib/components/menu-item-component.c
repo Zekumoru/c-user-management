@@ -5,6 +5,12 @@
 
 char *logicMenuItemComponent(Component *_mic, int charInput)
 {
+  MenuItemComponent *mic = (MenuItemComponent *)_mic;
+
+  if (charInput == KEY_ENTER || charInput == ' ' || charInput == '\n' || charInput == '\r')
+  {
+    return mic->proto->eventName;
+  }
 
   return NULL;
 }
@@ -45,7 +51,7 @@ MenuItemComponent *createMenuItemComponent(char text[], char eventName[])
   mic->proto = createComponentPrototype();
   mic->proto->type = strdup("MenuItemComponent");
   mic->proto->eventName = strdup(eventName);
-  mic->proto->focusable = false;
+  mic->proto->focusable = true;
   mic->proto->hasFocus = false;
   mic->proto->logic = logicMenuItemComponent;
   mic->proto->render = renderMenuItemComponent;
