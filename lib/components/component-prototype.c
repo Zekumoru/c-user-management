@@ -7,7 +7,7 @@ ComponentPrototype *createComponentPrototype()
   proto->type = NULL;
   proto->focusable = false;
   proto->logic = NULL;
-  proto->delete = NULL;
+  proto->destroy = NULL;
   return proto;
 }
 

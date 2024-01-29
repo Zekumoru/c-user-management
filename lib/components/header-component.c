@@ -16,7 +16,7 @@ void renderHeaderComponent(Component *_hc)
   attroff(A_BOLD);
 }
 
-void deleteHeaderComponent(Component *_hc)
+void destroyHeaderComponent(Component *_hc)
 {
   HeaderComponent *hc = (HeaderComponent *)_hc;
   destroyComponentPrototype(hc->proto);
@@ -32,7 +32,7 @@ HeaderComponent *createHeaderComponent()
   hc->proto->focusable = false;
   hc->proto->logic = logicHeaderComponent;
   hc->proto->render = renderHeaderComponent;
-  hc->proto->delete = deleteHeaderComponent;
+  hc->proto->destroy = destroyHeaderComponent;
   hc->text = strdup("");
   return hc;
 }
