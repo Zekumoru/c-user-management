@@ -13,6 +13,7 @@ typedef struct ComponentManager
   Component **components;
   size_t size;
   size_t allocSize;
+  size_t indexFocusedComponent;
 } ComponentManager;
 
 /**

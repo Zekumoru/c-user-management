@@ -9,6 +9,7 @@ ComponentManager *createComponentManager()
   cm->size = size;
   cm->allocSize = size;
   cm->components = malloc(size);
+  cm->indexFocusedComponent = 0;
   return cm;
 }
 
