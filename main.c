@@ -140,6 +140,9 @@ void handleEvent(WindowManager *wm, char *eventName, FILE *fp, void **data)
     InsertUserData *iud = (InsertUserData *)*data;
     User *user = createUser(iud->name, iud->surname, *iud->wage);
     printf("User: %s %s with %.2lf wage!\n", user->name, user->surname, user->wage);
+    destroyInsertUserData(iud);
+    destroyUser(user);
+    *data = NULL;
     popWindow(wm);
   }
 
