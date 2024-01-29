@@ -40,6 +40,13 @@ int main()
 
     // Input
     charInput = input();
+
+    // Cleanup
+    if (eventName != NULL)
+    {
+      free(eventName);
+      eventName = NULL;
+    }
   }
 
   // Cleanup and exit

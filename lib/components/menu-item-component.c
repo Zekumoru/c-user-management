@@ -9,7 +9,7 @@ char *logicMenuItemComponent(Component *_mic, int charInput)
 
   if (charInput == KEY_ENTER || charInput == ' ' || charInput == '\n' || charInput == '\r')
   {
-    return mic->proto->eventName;
+    return strdup(mic->proto->eventName);
   }
 
   return NULL;
