@@ -16,7 +16,8 @@ void pushWindow(WindowManager *wm, Window *win)
 {
   wm->windows = dalloc(wm->windows, sizeof(Window), wm->size, wm->allocSize);
   wm->current = win;
-  wm->windows[wm->size - 1] = win;
+  wm->windows[wm->size] = win;
+  wm->size++;
 }
 
 void popWindow(WindowManager *wm)

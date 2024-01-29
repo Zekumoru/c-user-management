@@ -25,5 +25,6 @@ void destroyComponentManager(ComponentManager *cm)
 void addComponent(ComponentManager *cm, Component *component)
 {
   cm->components = dalloc(cm->components, sizeof(Component *), cm->size, cm->allocSize);
-  cm->components[cm->size - 1] = component;
+  cm->components[cm->size] = component;
+  cm->size++;
 }

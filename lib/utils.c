@@ -2,10 +2,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-void *_dalloc(void *memory, size_t elementSize, size_t *currentSize, size_t *allocSize)
+void *_dalloc(void *memory, size_t elementSize, size_t currentSize, size_t *allocSize)
 {
   // dynamically allocate by O(log n)
-  if (*currentSize >= *allocSize)
+  if (currentSize >= *allocSize)
   {
     if (*allocSize == 0)
     {
@@ -16,7 +16,8 @@ void *_dalloc(void *memory, size_t elementSize, size_t *currentSize, size_t *all
       (*allocSize) *= 2;
     }
 
-    (*currentSize)++;
     return realloc(memory, elementSize * (*allocSize));
   }
+
+  return memory;
 }
