@@ -11,6 +11,7 @@ typedef struct ComponentPrototype
 {
   char *type;
   bool focusable;
+  bool hasFocus;
   void (*logic)(Component *, int);
   void (*render)(Component *);
   void (*destroy)(Component *);

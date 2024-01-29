@@ -30,6 +30,7 @@ HeaderComponent *createHeaderComponent()
   hc->proto = createComponentPrototype();
   hc->proto->type = strdup("HeaderComponent");
   hc->proto->focusable = false;
+  hc->proto->hasFocus = false;
   hc->proto->logic = logicHeaderComponent;
   hc->proto->render = renderHeaderComponent;
   hc->proto->destroy = destroyHeaderComponent;
