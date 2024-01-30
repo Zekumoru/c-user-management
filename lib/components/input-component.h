@@ -9,6 +9,7 @@
 typedef struct InputComponentPrototype
 {
   char *label;
+  char *placeholder;
   char *input;
   size_t allocSize;
   size_t curpos;
@@ -16,7 +17,7 @@ typedef struct InputComponentPrototype
   void (*render)(struct InputComponentPrototype *icp, ComponentPrototype *proto);
 } InputComponentPrototype;
 
-InputComponentPrototype *createInputComponentPrototype(char *label, char *input);
+InputComponentPrototype *createInputComponentPrototype(char *label, char *placeholder, char *input);
 void destroyInputComponentPrototype(InputComponentPrototype *icp);
 
 #endif // INPUT_COMPONENT_H

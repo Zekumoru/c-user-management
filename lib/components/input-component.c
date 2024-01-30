@@ -106,9 +106,17 @@ char *logicInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
 void renderInputComponentPrototype(InputComponentPrototype *icp, ComponentPrototype *proto)
 {
   printw("%s: ", icp->label);
+  size_t inputLength = strlen(icp->input);
+
+  // print placeholder if input is empty
+  if (inputLength == 0)
+  {
+    getyx(stdscr, proto->setcurY, proto->setcurX);
+    printw("(%s)\n", icp->placeholder);
+    return;
+  }
 
   // print value char by char
-  size_t inputLength = strlen(icp->input);
   for (size_t i = 0; i < inputLength; i++)
   {
     if (icp->curpos == i)
@@ -127,10 +135,11 @@ void renderInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
   addch('\n');
 }
 
-InputComponentPrototype *createInputComponentPrototype(char *label, char *input)
+InputComponentPrototype *createInputComponentPrototype(char *label, char *placeholder, char *input)
 {
   InputComponentPrototype *icp = malloc(sizeof(InputComponentPrototype));
   icp->label = strdup(label);
+  icp->placeholder = strdup(placeholder);
   icp->input = strdup(input);
   icp->curpos = strlen(input);
   icp->allocSize = strlen(input);
@@ -146,6 +155,7 @@ InputComponentPrototype *createInputComponentPrototype(char *label, char *input)
 void destroyInputComponentPrototype(InputComponentPrototype *icp)
 {
   free(icp->label);
+  free(icp->placeholder);
   free(icp->input);
   free(icp);
 }

@@ -36,6 +36,6 @@ void destroyTextInputComponent(Component *_tic);
  * \brief Creates a new text input component.
  * \return A text input component.
  */
-TextInputComponent *createTextInputComponent(char label[], char value[], char eventName[], char **outValue);
+TextInputComponent *createTextInputComponent(char label[], char placeholder[], char value[], char eventName[], char **outValue);
 
 #endif // TEXT_INPUT_COMPONENT_H
