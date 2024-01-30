@@ -43,7 +43,7 @@ TextInputComponent *createTextInputComponent(char label[], char placeholder[], c
   tic->proto->logic = logicTextInputComponent;
   tic->proto->render = renderTextInputComponent;
   tic->proto->destroy = destroyTextInputComponent;
-  tic->ic_proto = createInputComponentPrototype(label, placeholder, value);
+  tic->ic_proto = createInputComponentPrototype(label, placeholder, value, NULL);
   tic->value = tic->ic_proto->input;
   *outValue = tic->ic_proto->input;
   return tic;

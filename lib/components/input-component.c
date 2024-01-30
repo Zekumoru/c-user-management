@@ -64,8 +64,13 @@ char *logicInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
     icp->curpos--;
   }
 
-  // Run custom validator
+  // Run custom validators
   if (!validateFn(icp->input, charInput))
+  {
+    return NULL;
+  }
+
+  if (icp->customValidator != NULL && !icp->customValidator(icp->input, charInput))
   {
     return NULL;
   }
@@ -135,7 +140,7 @@ void renderInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
   addch('\n');
 }
 
-InputComponentPrototype *createInputComponentPrototype(char *label, char *placeholder, char *input)
+InputComponentPrototype *createInputComponentPrototype(char *label, char *placeholder, char *input, bool (*customValidator)(char *input, int charInput))
 {
   InputComponentPrototype *icp = malloc(sizeof(InputComponentPrototype));
   icp->label = strdup(label);
@@ -149,6 +154,7 @@ InputComponentPrototype *createInputComponentPrototype(char *label, char *placeh
   }
   icp->logic = logicInputComponentPrototype;
   icp->render = renderInputComponentPrototype;
+  icp->customValidator = customValidator;
   return icp;
 }
 

@@ -57,7 +57,7 @@ DoubleInputComponent *createDoubleInputComponent(char label[], char placeholder[
   {
     sprintf(valueString, "%.2lf", value);
   }
-  dic->ic_proto = createInputComponentPrototype(label, placeholder, valueString);
+  dic->ic_proto = createInputComponentPrototype(label, placeholder, valueString, NULL);
   *outValue = &dic->value;
   return dic;
 }
