@@ -12,9 +12,9 @@ InsertUserData *createInsertUserData()
 
 void destroyInsertUserData(InsertUserData *iud)
 {
-  free(iud->name);
-  free(iud->surname);
-  free(iud->wage);
+  // We don't free the members of this InsertUserData since their values
+  // are addresses to the component's values hence it's the component
+  // that will free them from memory
   free(iud);
 }
 

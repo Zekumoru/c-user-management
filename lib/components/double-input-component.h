@@ -9,11 +9,8 @@
 typedef struct DoubleInputComponent
 {
   ComponentPrototype *proto;
-  char *label;
-  char *valueString;
+  struct InputComponentPrototype *ic_proto;
   double value;
-  size_t valueAllocSize;
-  size_t curpos;
 } DoubleInputComponent;
 
 /**

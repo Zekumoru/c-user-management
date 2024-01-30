@@ -9,10 +9,8 @@
 typedef struct TextInputComponent
 {
   ComponentPrototype *proto;
-  char *label;
+  struct InputComponentPrototype *ic_proto;
   char *value;
-  size_t valueAllocSize;
-  size_t curpos;
 } TextInputComponent;
 
 /**
