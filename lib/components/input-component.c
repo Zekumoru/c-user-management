@@ -15,7 +15,7 @@ char *logicInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
   // handle enter
   if (charInput == KEY_ENTER || charInput == '\n' || charInput == '\r')
   {
-    return proto->eventName;
+    return strdup(proto->eventName);
   }
 
   // handle moving through the string
