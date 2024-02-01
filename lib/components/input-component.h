@@ -19,6 +19,5 @@ typedef struct InputComponentPrototype
 } InputComponentPrototype;
 
 InputComponentPrototype *createInputComponentPrototype(char *label, char *placeholder, char *input, bool (*customValidator)(char *input, int charInput));
-void destroyInputComponentPrototype(InputComponentPrototype *icp);
 
 #endif // INPUT_COMPONENT_H

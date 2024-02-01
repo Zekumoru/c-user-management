@@ -38,7 +38,7 @@ void renderDoubleInputComponent(Component *_dic)
 void destroyDoubleInputComponent(Component *_dic)
 {
   DoubleInputComponent *dic = (DoubleInputComponent *)_dic;
-  destroyComponentPrototype(dic->proto);
+  dic->proto->destroy(dic->proto);
   free(dic);
 }
 

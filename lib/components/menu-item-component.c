@@ -40,7 +40,7 @@ void renderMenuItemComponent(Component *_mic)
 void destroyMenuItemComponent(Component *_mic)
 {
   MenuItemComponent *mic = (MenuItemComponent *)_mic;
-  destroyComponentPrototype(mic->proto);
+  mic->proto->destroy(mic->proto);
   free(mic->text);
   free(mic);
 }
