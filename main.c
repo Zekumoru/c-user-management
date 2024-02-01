@@ -82,7 +82,7 @@ char *logic(WindowManager *wm, int charInput)
   case KEY_UP:
     for (int i = index - 1; i >= 0; i--)
     {
-      if (focusComponent(cm, i))
+      if (cm->focusComponent(cm, i))
       {
         found = true;
         break;
@@ -92,7 +92,7 @@ char *logic(WindowManager *wm, int charInput)
     // if not found then start from zero the search
     for (int i = cm->size - 1; i > index && !found; i--)
     {
-      if (focusComponent(cm, i))
+      if (cm->focusComponent(cm, i))
       {
         break;
       }
@@ -105,7 +105,7 @@ char *logic(WindowManager *wm, int charInput)
   case KEY_DOWN:
     for (int i = index + 1; i < cm->size; i++)
     {
-      if (focusComponent(cm, i))
+      if (cm->focusComponent(cm, i))
       {
         found = true;
         break;
@@ -115,7 +115,7 @@ char *logic(WindowManager *wm, int charInput)
     // if not found then start from zero the search
     for (int i = 0; i < index && !found; i++)
     {
-      if (focusComponent(cm, i))
+      if (cm->focusComponent(cm, i))
       {
         break;
       }

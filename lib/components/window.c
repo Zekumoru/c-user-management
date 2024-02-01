@@ -10,6 +10,6 @@ Window *createWindow()
 
 void destroyWindow(Window *win)
 {
-  destroyComponentManager(win->cm);
+  win->cm->destroy(win->cm);
   free(win);
 }
