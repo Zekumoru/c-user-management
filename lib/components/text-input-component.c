@@ -29,7 +29,7 @@ void renderTextInputComponent(Component *_tic)
 void destroyTextInputComponent(Component *_tic)
 {
   TextInputComponent *tic = (TextInputComponent *)_tic;
-  destroyComponentPrototype(tic->proto);
+  tic->proto->destroy(tic->proto);
   free(tic);
 }
 

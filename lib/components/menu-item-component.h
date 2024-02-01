@@ -13,25 +13,6 @@ typedef struct MenuItemComponent
 } MenuItemComponent;
 
 /**
- * \brief Logic code for menu item component.
- * \param hc A menu item component.
- * \return An event name.
- */
-char *logicMenuItemComponent(Component *_hc, int charInput);
-
-/**
- * \brief Render code for menu item component.
- * \param hc A menu item component to render.
- */
-void renderMenuItemComponent(Component *_hc);
-
-/**
- * \brief Frees a menu item component from memory.
- * \param tic A menu item component to free.
- */
-void destroyMenuItemComponent(Component *_hc);
-
-/**
  * \brief Creates a new menu item component.
  * \return A menu item component.
  */

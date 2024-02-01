@@ -28,10 +28,4 @@ typedef struct ComponentPrototype
  */
 ComponentPrototype *createComponentPrototype();
 
-/**
- * \brief Frees a component prototype.
- * \param proto A pointer to the component prototype to free.
- */
-void destroyComponentPrototype(ComponentPrototype *proto);
-
 #endif //  COMPONENT_PROTOTYPE_H
