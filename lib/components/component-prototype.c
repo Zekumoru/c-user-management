@@ -1,18 +1,12 @@
 #include "components.h"
 #include <stdlib.h>
 
-char *logicComponentPrototype(Component *proto, int charInput) {}
+Event *logicComponentPrototype(Component *proto, int charInput) {}
 void renderComponentPrototype(Component *proto) {}
 
 void destroyComponentPrototype(Component *__proto)
 {
   ComponentPrototype *proto = (ComponentPrototype *)__proto;
-
-  if (proto->eventName != NULL)
-  {
-    free(proto->eventName);
-  }
-
   free(proto->type);
   free(proto);
 }
@@ -21,7 +15,6 @@ ComponentPrototype *createComponentPrototype()
 {
   ComponentPrototype *proto = malloc(sizeof(ComponentPrototype));
   proto->type = NULL;
-  proto->eventName = NULL;
   proto->focusable = false;
   proto->hasFocus = false;
   proto->arrowsSuppressed = false;

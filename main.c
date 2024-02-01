@@ -6,8 +6,8 @@
 #include <string.h>
 
 void init();
-char *logic(WindowManager *wm, int charInput);
-void handleEvent(WindowManager *wm, char *eventName, FILE *fp, void **data);
+Event *logic(WindowManager *wm, int charInput);
+void handleEvent(WindowManager *wm, Event *event, FILE *fp, void **data);
 void render(WindowManager *wm);
 int input();
 void cleanup();
@@ -19,7 +19,7 @@ int main()
   // Define variables
   WindowManager *wm = createWindowManager();
   pushWindow(wm, createMainMenuWindow());
-  char *eventName = NULL;
+  Event *event = NULL;
   void **data = malloc(sizeof(void *));
   int charInput = 0;
   FILE *fp = NULL;
@@ -28,14 +28,14 @@ int main()
   while (true)
   {
     // Logic
-    eventName = logic(wm, charInput);
-    if (eventName != NULL && strcmp(eventName, "exit") == 0)
+    event = logic(wm, charInput);
+    if (event != NULL && strcmp(event->name, "exit") == 0)
     {
       break;
     }
 
     // Events
-    handleEvent(wm, eventName, fp, data);
+    handleEvent(wm, event, fp, data);
 
     // Render
     render(wm);
@@ -44,16 +44,19 @@ int main()
     charInput = input();
 
     // Cleanup
-    if (eventName != NULL)
+    if (event != NULL)
     {
-      free(eventName);
-      eventName = NULL;
+      event->destroy(event);
+      event = NULL;
     }
   }
 
   // Cleanup and exit
   destroyWindowManager(wm);
-  free(eventName);
+  if (event != NULL)
+  {
+    event->destroy(event);
+  }
   cleanup();
   return 0;
 }
@@ -67,13 +70,13 @@ void init()
   curs_set(0);
 }
 
-char *logic(WindowManager *wm, int charInput)
+Event *logic(WindowManager *wm, int charInput)
 {
   ComponentManager *cm = wm->current->cm;
   int index = cm->indexFocusedComponent;
   StubComponent *focusedComponent = (StubComponent *)cm->components[index];
 
-  char *eventName = focusedComponent->proto->logic(focusedComponent, charInput);
+  Event *event = focusedComponent->proto->logic(focusedComponent, charInput);
 
   bool found = false;
   switch (charInput)
@@ -125,17 +128,17 @@ char *logic(WindowManager *wm, int charInput)
     break;
   }
 
-  return eventName;
+  return event;
 }
 
-void handleEvent(WindowManager *wm, char *eventName, FILE *fp, void **data)
+void handleEvent(WindowManager *wm, Event *event, FILE *fp, void **data)
 {
-  if (eventName == NULL)
+  if (event == NULL)
   {
     return;
   }
 
-  if (strcmp(eventName, "submit-user") == 0)
+  if (strcmp(event->name, "submit-user") == 0)
   {
     InsertUserData *iud = (InsertUserData *)*data;
     User *user = createUser(iud->name, iud->surname, *iud->wage);
@@ -146,7 +149,7 @@ void handleEvent(WindowManager *wm, char *eventName, FILE *fp, void **data)
     popWindow(wm);
   }
 
-  if (strcmp(eventName, "open-insert-user-window") == 0)
+  if (strcmp(event->name, "open-insert-user-window") == 0)
   {
     pushWindow(wm, createInsertUserWindow(data));
   }

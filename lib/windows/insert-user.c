@@ -32,18 +32,18 @@ Window *createInsertUserWindow(void **data)
   win->cm->addComponent(win->cm, createHeaderComponent("Insert user"));
 
   // Setup name text input component
-  tic = createTextInputComponent("Name", "name here", "", "name-input", &iud->name);
+  tic = createTextInputComponent("Name", "name here", "", &iud->name);
   tic->proto->hasFocus = true;
   win->cm->indexFocusedComponent = 1;
   tic->ic_proto->customValidator = validateAlphaOnly;
   win->cm->addComponent(win->cm, tic);
 
   // Setup surname text input component
-  tic = createTextInputComponent("Surname", "surname here", "", "surname-input", &iud->surname);
+  tic = createTextInputComponent("Surname", "surname here", "", &iud->surname);
   tic->ic_proto->customValidator = validateAlphaOnly;
   win->cm->addComponent(win->cm, tic);
 
-  win->cm->addComponent(win->cm, createDoubleInputComponent("Wage", "0.00", 0, "wage-input", &iud->wage));
+  win->cm->addComponent(win->cm, createDoubleInputComponent("Wage", "0.00", 0, &iud->wage));
   win->cm->addComponent(win->cm, createMenuItemComponent("Submit", "submit-user"));
   *data = (void *)iud;
   return win;

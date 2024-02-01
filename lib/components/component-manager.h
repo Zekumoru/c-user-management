@@ -1,8 +1,6 @@
 #ifndef COMPONENT_MANAGER_H
 #define COMPONENT_MANAGER_H
 
-#define Component void
-
 #include <stddef.h>
 #include <stdbool.h>
 

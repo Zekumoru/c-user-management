@@ -21,33 +21,33 @@ bool validateDoubleInputComponent(char *input, int charInput)
   return true;
 }
 
-char *logicDoubleInputComponent(Component *_dic, int charInput)
+Event *logicDoubleInputComponent(Component *_dic, int charInput)
 {
   DoubleInputComponent *dic = (DoubleInputComponent *)_dic;
-  char *eventName = dic->ic_proto->logic(dic->ic_proto, dic->proto, charInput, validateDoubleInputComponent);
+  Event *event = dic->ic_proto->logic(dic->ic_proto, dic, charInput, validateDoubleInputComponent);
   dic->value = toDouble(dic->ic_proto->input);
-  return eventName;
+  return event;
 }
 
 void renderDoubleInputComponent(Component *_dic)
 {
   DoubleInputComponent *dic = (DoubleInputComponent *)_dic;
-  dic->ic_proto->render(dic->ic_proto, dic->proto);
+  dic->ic_proto->render(dic->ic_proto, dic);
 }
 
 void destroyDoubleInputComponent(Component *_dic)
 {
   DoubleInputComponent *dic = (DoubleInputComponent *)_dic;
+  dic->ic_proto->destroy(dic->ic_proto);
   dic->proto->destroy(dic->proto);
   free(dic);
 }
 
-DoubleInputComponent *createDoubleInputComponent(char label[], char placeholder[], double value, char eventName[], double **outValue)
+DoubleInputComponent *createDoubleInputComponent(char label[], char placeholder[], double value, double **outValue)
 {
   DoubleInputComponent *dic = malloc(sizeof(DoubleInputComponent));
   dic->proto = createComponentPrototype();
   dic->proto->type = strdup("DoubleInputComponent");
-  dic->proto->eventName = strdup(eventName);
   dic->proto->focusable = true;
   dic->proto->logic = logicDoubleInputComponent;
   dic->proto->render = renderDoubleInputComponent;

@@ -14,31 +14,31 @@ bool validateTextInputComponent(char *input, int charInput)
   return true;
 }
 
-char *logicTextInputComponent(Component *_tic, int charInput)
+Event *logicTextInputComponent(Component *_tic, int charInput)
 {
   TextInputComponent *tic = (TextInputComponent *)_tic;
-  return tic->ic_proto->logic(tic->ic_proto, tic->proto, charInput, validateTextInputComponent);
+  return tic->ic_proto->logic(tic->ic_proto, tic, charInput, validateTextInputComponent);
 }
 
 void renderTextInputComponent(Component *_tic)
 {
   TextInputComponent *tic = (TextInputComponent *)_tic;
-  tic->ic_proto->render(tic->ic_proto, tic->proto);
+  tic->ic_proto->render(tic->ic_proto, tic);
 }
 
 void destroyTextInputComponent(Component *_tic)
 {
   TextInputComponent *tic = (TextInputComponent *)_tic;
+  tic->ic_proto->destroy(tic->ic_proto);
   tic->proto->destroy(tic->proto);
   free(tic);
 }
 
-TextInputComponent *createTextInputComponent(char label[], char placeholder[], char value[], char eventName[], char **outValue)
+TextInputComponent *createTextInputComponent(char label[], char placeholder[], char value[], char **outValue)
 {
   TextInputComponent *tic = malloc(sizeof(TextInputComponent));
   tic->proto = createComponentPrototype();
   tic->proto->type = strdup("TextInputComponent");
-  tic->proto->eventName = strdup(eventName);
   tic->proto->focusable = true;
   tic->proto->logic = logicTextInputComponent;
   tic->proto->render = renderTextInputComponent;

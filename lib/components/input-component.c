@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *logicInputComponentPrototype(InputComponentPrototype *icp, ComponentPrototype *proto, int charInput, bool (*validateFn)(char *input, int charInput))
+Event *logicInputComponentPrototype(InputComponentPrototype *icp, Component *component, int charInput, bool (*validateFn)(char *input, int charInput))
 {
+  ComponentPrototype *proto = ((StubComponent *)component)->proto;
+
   // if it ain't focused then return
   if (!proto->hasFocus)
   {
@@ -15,7 +17,8 @@ char *logicInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
   // handle enter
   if (charInput == KEY_ENTER || charInput == '\n' || charInput == '\r')
   {
-    return strdup(proto->eventName);
+    InputPayload *payload = createInputPayload(icp->input);
+    return createEvent("input-entered", component, payload);
   }
 
   // handle moving through the string
@@ -108,8 +111,9 @@ char *logicInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
   return NULL;
 }
 
-void renderInputComponentPrototype(InputComponentPrototype *icp, ComponentPrototype *proto)
+void renderInputComponentPrototype(InputComponentPrototype *icp, Component *component)
 {
+  ComponentPrototype *proto = ((StubComponent *)component)->proto;
   printw("%s: ", icp->label);
   size_t inputLength = strlen(icp->input);
 
@@ -140,6 +144,14 @@ void renderInputComponentPrototype(InputComponentPrototype *icp, ComponentProtot
   addch('\n');
 }
 
+void destroyInputComponentPrototype(InputComponentPrototype *icp)
+{
+  free(icp->label);
+  free(icp->placeholder);
+  free(icp->input);
+  free(icp);
+}
+
 InputComponentPrototype *createInputComponentPrototype(char *label, char *placeholder, char *input, bool (*customValidator)(char *input, int charInput))
 {
   InputComponentPrototype *icp = malloc(sizeof(InputComponentPrototype));
@@ -154,14 +166,7 @@ InputComponentPrototype *createInputComponentPrototype(char *label, char *placeh
   }
   icp->logic = logicInputComponentPrototype;
   icp->render = renderInputComponentPrototype;
+  icp->destroy = destroyInputComponentPrototype;
   icp->customValidator = customValidator;
   return icp;
-}
-
-void destroyInputComponentPrototype(InputComponentPrototype *icp)
-{
-  free(icp->label);
-  free(icp->placeholder);
-  free(icp->input);
-  free(icp);
 }
