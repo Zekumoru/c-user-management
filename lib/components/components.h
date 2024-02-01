@@ -1,6 +1,10 @@
 #ifndef COMPONENTS_COMPONENTS_H
 #define COMPONENTS_COMPONENTS_H
 
+#define Component void
+
+#include "event.h"
+#include "stub-payload.h"
 #include "component-manager.h"
 #include "component-prototype.h"
 #include "stub-component.h"

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *logicHeaderComponent(Component *_hc, int charInput)
+Event *logicHeaderComponent(Component *_hc, int charInput)
 {
   HeaderComponent *hc = (HeaderComponent *)_hc;
   return NULL;
@@ -30,7 +30,6 @@ HeaderComponent *createHeaderComponent(char text[])
   HeaderComponent *hc = malloc(sizeof(HeaderComponent));
   hc->proto = createComponentPrototype();
   hc->proto->type = strdup("HeaderComponent");
-  hc->proto->eventName = NULL;
   hc->proto->focusable = false;
   hc->proto->hasFocus = false;
   hc->proto->logic = logicHeaderComponent;
