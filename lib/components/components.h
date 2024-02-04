@@ -11,7 +11,7 @@
 #include "window-component.h"
 #include "header-component.h"
 #include "menu-item-component.h"
-#include "input-component.h"
+#include "input-prototype-component.h"
 #include "text-input-component.h"
 #include "double-input-component.h"
 
