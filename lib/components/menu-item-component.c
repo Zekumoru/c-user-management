@@ -42,7 +42,7 @@ void destroyMenuItemComponent(Component *_mic)
   MenuItemComponent *mic = (MenuItemComponent *)_mic;
   mic->event->persistsPayload = false;
   mic->event->destroy(mic->event);
-  mic->proto->destroy(mic->proto);
+  mic->proto->destroyProto(mic->proto);
   free(mic->text);
   free(mic);
 }

@@ -27,6 +27,13 @@ bool focusComponent_CM(ComponentManager *cm, size_t index)
 
 void destroyComponentManager(ComponentManager *cm)
 {
+  // free individual components from memory
+  for (size_t i = 0; i < cm->size; i++)
+  {
+    StubComponent *component = (StubComponent *)cm->components[i];
+    component->proto->destroy(component);
+  }
+
   free(cm->components);
   free(cm);
 }

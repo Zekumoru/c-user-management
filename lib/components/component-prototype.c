@@ -1,12 +1,8 @@
 #include "components.h"
 #include <stdlib.h>
 
-Event *logicComponentPrototype(Component *proto, int charInput) {}
-void renderComponentPrototype(Component *proto) {}
-
-void destroyComponentPrototype(Component *__proto)
+void destroyComponentPrototype(ComponentPrototype *proto)
 {
-  ComponentPrototype *proto = (ComponentPrototype *)__proto;
   free(proto->type);
   free(proto);
 }
@@ -21,8 +17,10 @@ ComponentPrototype *createComponentPrototype()
   // where to put cursor after rending, negative coordinates mean to ignore
   proto->setcurX = -1;
   proto->setcurY = -1;
-  proto->logic = logicComponentPrototype;
-  proto->render = renderComponentPrototype;
-  proto->destroy = destroyComponentPrototype;
+  proto->destroyProto = destroyComponentPrototype;
+  // the methods below must be assigned when making a component
+  proto->logic = NULL;
+  proto->render = NULL;
+  proto->destroy = NULL;
   return proto;
 }
