@@ -8,6 +8,7 @@
 #include "component-manager.h"
 #include "component-prototype.h"
 #include "stub-component.h"
+#include "window-manager-component.h"
 #include "window-component.h"
 #include "header-component.h"
 #include "menu-item-component.h"
