@@ -14,6 +14,7 @@ typedef struct ComponentManager
   size_t allocSize;
   size_t indexFocusedComponent;
   void (*addComponent)(struct ComponentManager *cm, Component *component);
+  bool (*removeComponent)(struct ComponentManager *cm, size_t indexToRemove);
   bool (*focusComponent)(struct ComponentManager *cm, size_t index);
   void (*destroy)(struct ComponentManager *cm);
 } ComponentManager;

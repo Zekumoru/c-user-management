@@ -4,6 +4,6 @@
 #include "components.h"
 #include "windows/insert-user.h"
 
-Window *createMainMenuWindow();
+WindowComponent *createMainMenuWindowComponent();
 
 #endif // WINDOWS_H

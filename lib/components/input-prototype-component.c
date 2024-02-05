@@ -1,4 +1,4 @@
-#include "input-component.h"
+#include "input-prototype-component.h"
 #include "../utils.h"
 #include <ncurses.h>
 #include <stdlib.h>

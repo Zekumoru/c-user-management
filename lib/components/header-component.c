@@ -20,8 +20,8 @@ void renderHeaderComponent(Component *_hc)
 void destroyHeaderComponent(Component *_hc)
 {
   HeaderComponent *hc = (HeaderComponent *)_hc;
-  hc->proto->destroy(hc->proto);
   free(hc->text);
+  hc->proto->destroyProto(hc->proto);
   free(hc);
 }
 

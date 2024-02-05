@@ -18,6 +18,7 @@ typedef struct ComponentPrototype
   int setcurY;
   Event *(*logic)(Component *, int);
   void (*render)(Component *);
+  void (*destroyProto)(struct ComponentPrototype *);
   void (*destroy)(Component *);
 } ComponentPrototype;
 

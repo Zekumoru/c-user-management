@@ -25,8 +25,56 @@ bool focusComponent_CM(ComponentManager *cm, size_t index)
   return false;
 }
 
+// returns true if a component has been removed
+bool removeComponent_CM(ComponentManager *cm, size_t indexToRemove)
+{
+  // first check if the index exists
+  if (indexToRemove >= cm->size || indexToRemove < 0)
+  {
+    return false;
+  }
+
+  // create a temporary new components array and put everything there
+  // except the component to delete
+  size_t newSize = cm->size - 1;
+  Component **newComponents = malloc(sizeof(Component *) * newSize);
+  for (size_t i = 0, j = 0; i < cm->size; i++)
+  {
+    if (i == indexToRemove)
+    {
+      // ignore this component since it is to be removed
+      StubComponent *component = (StubComponent *)cm->components[i];
+      component->proto->destroy(component);
+      j++; // this is used to like "skip" the removed element
+      continue;
+    }
+
+    newComponents[i - j] = cm->components[i];
+  }
+
+  // check if possible to divide allocSize by 2
+  if (newSize <= (cm->allocSize / 2))
+  {
+    cm->allocSize /= 2;
+  }
+
+  // move the new components to component manager and also free the old one
+  free(cm->components);
+  cm->components = newComponents;
+  cm->size = newSize;
+
+  return true;
+}
+
 void destroyComponentManager(ComponentManager *cm)
 {
+  // free individual components from memory
+  for (size_t i = 0; i < cm->size; i++)
+  {
+    StubComponent *component = (StubComponent *)cm->components[i];
+    component->proto->destroy(component);
+  }
+
   free(cm->components);
   free(cm);
 }
@@ -40,6 +88,7 @@ ComponentManager *createComponentManager()
   cm->components = malloc(size);
   cm->indexFocusedComponent = 0;
   cm->addComponent = addComponent_CM;
+  cm->removeComponent = removeComponent_CM;
   cm->focusComponent = focusComponent_CM;
   cm->destroy = destroyComponentManager;
   return cm;

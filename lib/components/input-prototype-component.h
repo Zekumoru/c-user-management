@@ -1,5 +1,5 @@
-#ifndef INPUT_COMPONENT_H
-#define INPUT_COMPONENT_H
+#ifndef INPUT_PROTOTYPE_COMPONENT_H
+#define INPUT_PROTOTYPE_COMPONENT_H
 
 #include "../components.h"
 
@@ -44,4 +44,4 @@ typedef struct InputPayload
  */
 InputPayload *createInputPayload(char *input);
 
-#endif // INPUT_COMPONENT_H
+#endif // INPUT_PROTOTYPE_COMPONENT_H

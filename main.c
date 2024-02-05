@@ -6,9 +6,7 @@
 #include <string.h>
 
 void init();
-Event *logic(WindowManager *wm, int charInput);
-void handleEvent(WindowManager *wm, Event *event, FILE *fp, void **data);
-void render(WindowManager *wm);
+void run(Component *__component);
 int input();
 void cleanup();
 
@@ -16,47 +14,10 @@ int main()
 {
   init();
 
-  // Define variables
-  WindowManager *wm = createWindowManager();
-  pushWindow(wm, createMainMenuWindow());
-  Event *event = NULL;
-  void **data = malloc(sizeof(void *));
-  int charInput = 0;
-  FILE *fp = NULL;
+  WindowManagerComponent *wmc = createWindowManagerComponent();
+  wmc->push(wmc, createMainMenuWindowComponent());
+  run(wmc);
 
-  // Main program loop
-  while (true)
-  {
-    // Logic
-    event = logic(wm, charInput);
-    if (event != NULL && strcmp(event->name, "exit") == 0)
-    {
-      break;
-    }
-
-    // Events
-    handleEvent(wm, event, fp, data);
-
-    // Render
-    render(wm);
-
-    // Input
-    charInput = input();
-
-    // Cleanup
-    if (event != NULL)
-    {
-      event->destroy(event);
-      event = NULL;
-    }
-  }
-
-  // Cleanup and exit
-  destroyWindowManager(wm);
-  if (event != NULL)
-  {
-    event->destroy(event);
-  }
   cleanup();
   return 0;
 }
@@ -70,119 +31,43 @@ void init()
   curs_set(0);
 }
 
-Event *logic(WindowManager *wm, int charInput)
+void run(Component *__component)
 {
-  ComponentManager *cm = wm->current->cm;
-  int index = cm->indexFocusedComponent;
-  StubComponent *focusedComponent = (StubComponent *)cm->components[index];
+  StubComponent *component = (StubComponent *)__component;
 
-  Event *event = focusedComponent->proto->logic(focusedComponent, charInput);
-
-  bool found = false;
-  switch (charInput)
+  int charInput = 0;
+  Event *event;
+  while (true)
   {
-  // find the previous focusable component
-  case KEY_UP:
-    for (int i = index - 1; i >= 0; i--)
+    // Logic
+    event = component->proto->logic(component, charInput);
+    if (event != NULL && strcmp(event->name, "exit") == 0)
     {
-      if (cm->focusComponent(cm, i))
-      {
-        found = true;
-        break;
-      }
+      break;
     }
 
-    // if not found then start from zero the search
-    for (int i = cm->size - 1; i > index && !found; i--)
-    {
-      if (cm->focusComponent(cm, i))
-      {
-        break;
-      }
-    }
-
-    // if still not found, never mind...
-    break;
-  // find the next focusable component
-  case 9: // TAB
-  case KEY_DOWN:
-    for (int i = index + 1; i < cm->size; i++)
-    {
-      if (cm->focusComponent(cm, i))
-      {
-        found = true;
-        break;
-      }
-    }
-
-    // if not found then start from zero the search
-    for (int i = 0; i < index && !found; i++)
-    {
-      if (cm->focusComponent(cm, i))
-      {
-        break;
-      }
-    }
-
-    // if still not found, never mind...
-    break;
-  }
-
-  return event;
-}
-
-void handleEvent(WindowManager *wm, Event *event, FILE *fp, void **data)
-{
-  if (event == NULL)
-  {
-    return;
-  }
-
-  if (strcmp(event->name, "submit-user") == 0)
-  {
-    InsertUserData *iud = (InsertUserData *)*data;
-    User *user = createUser(iud->name, iud->surname, *iud->wage);
-    printf("User: %s %s with %.2lf wage!\n", user->name, user->surname, user->wage);
-    destroyInsertUserData(iud);
-    destroyUser(user);
-    *data = NULL;
-    popWindow(wm);
-  }
-
-  if (strcmp(event->name, "open-insert-user-window") == 0)
-  {
-    pushWindow(wm, createInsertUserWindow(data));
-  }
-}
-
-void render(WindowManager *wm)
-{
-  clear();
-
-  ComponentManager *cm = wm->current->cm;
-  Component **components = cm->components;
-
-  for (size_t i = 0; i < cm->size; i++)
-  {
-    StubComponent *component = (StubComponent *)cm->components[i];
+    // Render
+    clear();
     component->proto->render(component);
+    refresh();
+
+    // Input
+    charInput = input();
+
+    // Cleanup
+    if (event != NULL)
+    {
+      event->destroy(event);
+      event = NULL;
+    }
   }
 
-  // set cursor position on the screen (or hide it for that matter)
-  StubComponent *focusedComponent = (StubComponent *)cm->components[cm->indexFocusedComponent];
-  int setcurX = focusedComponent->proto->setcurX;
-  int setcurY = focusedComponent->proto->setcurY;
-  if (setcurX >= 0 && setcurY >= 0)
+  // Cleanup and exit
+  component->proto->destroy(component);
+  if (event != NULL)
   {
-    curs_set(1);
-    move(setcurY, setcurX);
+    event->destroy(event);
   }
-  else
-  {
-    curs_set(0);
-  }
-
-  refresh();
 }
 
 int input()

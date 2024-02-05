@@ -2,9 +2,14 @@
 #include "../components.h"
 #include <string.h>
 
-Window *createMainMenuWindow()
+Event *handleEventMainMenuWindow(Event *event)
 {
-  Window *win = createWindow();
+  return event;
+}
+
+WindowComponent *createMainMenuWindowComponent()
+{
+  WindowComponent *win = createWindowComponent();
   win->cm->addComponent(win->cm, createHeaderComponent("Main Menu"));
   MenuItemComponent *mic = createMenuItemComponent("Insert user", "open-insert-user-window");
   mic->proto->hasFocus = true;
@@ -15,5 +20,6 @@ Window *createMainMenuWindow()
   win->cm->addComponent(win->cm, createMenuItemComponent("Modify user", "open-modify-user-window"));
   win->cm->addComponent(win->cm, createMenuItemComponent("View all users", "open-view-all-users-window"));
   win->cm->addComponent(win->cm, createMenuItemComponent("Quit", "exit"));
+  win->handleEvent = handleEventMainMenuWindow;
   return win;
 }

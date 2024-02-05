@@ -30,7 +30,7 @@ void destroyTextInputComponent(Component *_tic)
 {
   TextInputComponent *tic = (TextInputComponent *)_tic;
   tic->ic_proto->destroy(tic->ic_proto);
-  tic->proto->destroy(tic->proto);
+  tic->proto->destroyProto(tic->proto);
   free(tic);
 }
 

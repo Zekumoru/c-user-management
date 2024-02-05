@@ -39,7 +39,7 @@ void destroyDoubleInputComponent(Component *_dic)
 {
   DoubleInputComponent *dic = (DoubleInputComponent *)_dic;
   dic->ic_proto->destroy(dic->ic_proto);
-  dic->proto->destroy(dic->proto);
+  dic->proto->destroyProto(dic->proto);
   free(dic);
 }
 
