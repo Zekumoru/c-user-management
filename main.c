@@ -41,7 +41,7 @@ void run(Component *__component)
   {
     // Logic
     event = component->proto->logic(component, charInput);
-    if (event != NULL && strcmp(event->name, "exit") == 0)
+    if (event != NULL && strcmp(((StubComponent *)event->sender)->proto->id, "exit-menu-item") == 0)
     {
       break;
     }

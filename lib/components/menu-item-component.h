@@ -10,7 +10,6 @@ typedef struct MenuItemComponent
 {
   ComponentPrototype *proto;
   char *text;
-  Event *event;
 } MenuItemComponent;
 
 /**

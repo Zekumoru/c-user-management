@@ -4,7 +4,6 @@
 #define Component void
 
 #include "event.h"
-#include "stub-payload.h"
 #include "component-manager.h"
 #include "component-prototype.h"
 #include "stub-component.h"

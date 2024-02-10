@@ -3,13 +3,17 @@
 
 void destroyComponentPrototype(ComponentPrototype *proto)
 {
-  free(proto->type);
+  if (proto->id != NULL)
+    free(proto->id);
+  if (proto->type != NULL)
+    free(proto->type);
   free(proto);
 }
 
 ComponentPrototype *createComponentPrototype()
 {
   ComponentPrototype *proto = malloc(sizeof(ComponentPrototype));
+  proto->id = NULL;
   proto->type = NULL;
   proto->focusable = false;
   proto->hasFocus = false;

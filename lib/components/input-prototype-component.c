@@ -17,8 +17,7 @@ Event *logicInputComponentPrototype(InputComponentPrototype *icp, Component *com
   // handle enter
   if (charInput == KEY_ENTER || charInput == '\n' || charInput == '\r')
   {
-    InputPayload *payload = createInputPayload(icp->input);
-    return createEvent("input-entered", component, payload);
+    return createEvent("keyenter", icp, icp->input);
   }
 
   // handle moving through the string

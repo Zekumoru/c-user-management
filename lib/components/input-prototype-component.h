@@ -29,19 +29,4 @@ typedef struct InputComponentPrototype
  */
 InputComponentPrototype *createInputComponentPrototype(char *label, char *placeholder, char *input, bool (*customValidator)(char *input, int charInput));
 
-/**
- * \brief A struct to an input event payload.
- */
-typedef struct InputPayload
-{
-  void (*destroy)(StubPayload *ip);
-  char *input;
-} InputPayload;
-
-/**
- * \brief Creates a new input payload.
- * \return A new input payload.
- */
-InputPayload *createInputPayload(char *input);
-
 #endif // INPUT_PROTOTYPE_COMPONENT_H

@@ -9,6 +9,7 @@
  */
 typedef struct ComponentPrototype
 {
+  char *id;
   char *type;
   bool focusable;
   bool hasFocus;
