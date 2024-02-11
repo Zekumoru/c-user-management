@@ -2,10 +2,18 @@
 #include "../utils.h"
 #include <stdlib.h>
 
-void addComponent_CM(ComponentManager *cm, Component *component)
+void addComponent_CM(ComponentManager *cm, Component *__component)
 {
+  StubComponent *component = (StubComponent *)__component;
   cm->components = dalloc(cm->components, sizeof(Component *), cm->size, cm->allocSize);
   cm->components[cm->size] = component;
+
+  if (cm->indexFocusedComponent == -1 && component->proto->focusable)
+  {
+    component->proto->hasFocus = true;
+    cm->indexFocusedComponent = cm->size;
+  }
+
   cm->size++;
 }
 
@@ -86,7 +94,7 @@ ComponentManager *createComponentManager()
   cm->size = size;
   cm->allocSize = size;
   cm->components = malloc(size);
-  cm->indexFocusedComponent = 0;
+  cm->indexFocusedComponent = -1;
   cm->addComponent = addComponent_CM;
   cm->removeComponent = removeComponent_CM;
   cm->focusComponent = focusComponent_CM;

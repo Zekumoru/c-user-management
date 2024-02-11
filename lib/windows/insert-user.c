@@ -53,9 +53,6 @@ InsertUserWindow *createInsertUserWindow()
 
   // Setup name text input component
   iuw->nameInput = createTextInputComponent("Name", "name here", "");
-  // focusing first item is manual for now...
-  iuw->nameInput->proto->hasFocus = true;
-  cm->indexFocusedComponent = 1;
   cm->addComponent(cm, iuw->nameInput);
 
   // Setup surname text input component

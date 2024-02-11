@@ -54,9 +54,6 @@ MainMenuWindow *createMainMenuWindowComponent()
   cm->addComponent(cm, mmw->titleHeader);
 
   mmw->insertUserMenuItem = createMenuItemComponent("Insert user", "insert-user-item");
-  // focusing first item is manual for now...
-  mmw->insertUserMenuItem->proto->hasFocus = true;
-  cm->indexFocusedComponent = 1;
   cm->addComponent(cm, mmw->insertUserMenuItem);
 
   mmw->deleteUserMenuItem = createMenuItemComponent("Delete user", "delete-user-item");
