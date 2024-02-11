@@ -1,27 +1,61 @@
-#include "../windows.h"
-#include "../components.h"
+#include "main-menu.h"
+#include <stdlib.h>
 #include <string.h>
 
-Event *handleEventMainMenuWindow(Event *event)
+Event *handleEventMainMenuWindow(Window *__mmw, Event *event)
 {
+  MainMenuWindow *mmw = (MainMenuWindow *)__mmw;
+
+  if (event != NULL && strcmp(event->name, "click") == 0)
+  {
+    MenuItemComponent *mic = (MenuItemComponent *)event->sender;
+
+    if (strcmp(mic->proto->id, "exit-item") == 0)
+      return createEvent("exit", mmw->component, NULL);
+  }
+
   return event;
 }
 
-WindowComponent *createMainMenuWindowComponent()
+void destroyMainMenuWindow(Window *__mmw)
 {
-  WindowComponent *win = createWindowComponent();
-  win->cm->addComponent(win->cm, createHeaderComponent("Main Menu"));
-  MenuItemComponent *mic = createMenuItemComponent("Insert user", "open-insert-user-window");
-  mic->proto->hasFocus = true;
-  win->cm->indexFocusedComponent = 1;
-  win->cm->addComponent(win->cm, mic);
-  win->cm->addComponent(win->cm, createMenuItemComponent("Delete user", "open-delete-user-window"));
-  win->cm->addComponent(win->cm, createMenuItemComponent("Find user", "open-find-user-window"));
-  win->cm->addComponent(win->cm, createMenuItemComponent("Modify user", "open-modify-user-window"));
-  win->cm->addComponent(win->cm, createMenuItemComponent("View all users", "open-view-all-users-window"));
-  MenuItemComponent *exitMIC = createMenuItemComponent("Quit", "exit");
-  exitMIC->proto->id = strdup("exit-menu-item");
-  win->cm->addComponent(win->cm, exitMIC);
+  MainMenuWindow *mmw = (MainMenuWindow *)__mmw;
+  WindowComponent *wc = mmw->component;
+  wc->proto->destroy(wc);
+  free(mmw);
+}
+
+MainMenuWindow *createMainMenuWindowComponent()
+{
+  MainMenuWindow *mmw = malloc(sizeof(MainMenuWindow));
+  WindowComponent *win = createWindowComponent(mmw);
   win->handleEvent = handleEventMainMenuWindow;
-  return win;
+  mmw->destroy = destroyMainMenuWindow;
+  mmw->component = win;
+
+  // Add UI components
+  ComponentManager *cm = win->cm;
+
+  mmw->titleHeader = createHeaderComponent("Main Menu");
+  cm->addComponent(cm, mmw->titleHeader);
+
+  mmw->insertUserMenuItem = createMenuItemComponent("Insert user", "insert-user-item");
+  // focusing first item is manual for now...
+  mmw->insertUserMenuItem->proto->hasFocus = true;
+  cm->indexFocusedComponent = 1;
+  cm->addComponent(cm, mmw->insertUserMenuItem);
+
+  mmw->deleteUserMenuItem = createMenuItemComponent("Delete user", "delete-user-item");
+  cm->addComponent(cm, mmw->deleteUserMenuItem);
+  mmw->findUserMenuItem = createMenuItemComponent("Find user", "find-user-item");
+  cm->addComponent(cm, mmw->findUserMenuItem);
+  mmw->modifyUserMenuItem = createMenuItemComponent("Modify user", "modify-user-item");
+  cm->addComponent(cm, mmw->modifyUserMenuItem);
+  mmw->viewAllUsersMenuItem = createMenuItemComponent("View all users", "view-all-users-item");
+  cm->addComponent(cm, mmw->viewAllUsersMenuItem);
+
+  mmw->quitMenuItem = createMenuItemComponent("Quit", "exit-item");
+  cm->addComponent(cm, mmw->quitMenuItem);
+
+  return mmw;
 }

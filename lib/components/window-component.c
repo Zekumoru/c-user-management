@@ -28,7 +28,7 @@ Event *logicWindowComponent(Component *__wc, int charInput)
 
   if (wc->handleEvent != NULL)
   {
-    return wc->handleEvent(event);
+    return wc->handleEvent(wc->__window, event);
   }
 
   return NULL;
@@ -69,7 +69,7 @@ void destroyWindowComponent(Component *__wc)
   free(wc);
 }
 
-WindowComponent *createWindowComponent()
+WindowComponent *createWindowComponent(Window *window)
 {
   WindowComponent *wc = malloc(sizeof(WindowComponent));
   wc->proto = createComponentPrototype();
@@ -79,6 +79,7 @@ WindowComponent *createWindowComponent()
   wc->proto->render = renderWindowComponent;
   wc->proto->destroy = destroyWindowComponent;
   wc->cm = createComponentManager();
+  wc->__window = window;
   wc->handleEvent = NULL;
   return wc;
 }

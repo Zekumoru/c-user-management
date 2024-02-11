@@ -45,10 +45,11 @@ void destroyMenuItemComponent(Component *_mic)
   free(mic);
 }
 
-MenuItemComponent *createMenuItemComponent(char text[], const char eventName[])
+MenuItemComponent *createMenuItemComponent(char text[], const char componentId[])
 {
   MenuItemComponent *mic = malloc(sizeof(MenuItemComponent));
   mic->proto = createComponentPrototype();
+  mic->proto->id = strdup(componentId);
   mic->proto->type = strdup("MenuItemComponent");
   mic->proto->focusable = true;
   mic->proto->hasFocus = false;
