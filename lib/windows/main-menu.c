@@ -1,17 +1,31 @@
 #include "main-menu.h"
+#include "../windows.h"
+#include "../user.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 Event *handleEventMainMenuWindow(Window *__mmw, Event *event)
 {
   MainMenuWindow *mmw = (MainMenuWindow *)__mmw;
+  if (event == NULL)
+    return NULL;
 
-  if (event != NULL && strcmp(event->name, "click") == 0)
+  if (strcmp(event->name, "click") == 0)
   {
     MenuItemComponent *mic = (MenuItemComponent *)event->sender;
 
     if (strcmp(mic->proto->id, "exit-item") == 0)
       return createEvent("exit", mmw->component, NULL);
+    if (strcmp(mic->proto->id, "insert-user-item") == 0)
+      return createEvent("push", mmw->component, createInsertUserWindow());
+  }
+
+  if (strcmp(event->name, "new-user") == 0)
+  {
+    User *newUser = (User *)event->payload;
+    printf("New user: %s %s (Wage: %.2lf)\n", newUser->name, newUser->surname, newUser->wage);
+    destroyUser(newUser);
   }
 
   return event;

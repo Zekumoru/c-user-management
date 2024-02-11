@@ -17,6 +17,6 @@ typedef struct TextInputComponent
  * \brief Creates a new text input component.
  * \return A text input component.
  */
-TextInputComponent *createTextInputComponent(char label[], char placeholder[], char value[], char **outValue);
+TextInputComponent *createTextInputComponent(char label[], char placeholder[], char value[]);
 
 #endif // TEXT_INPUT_COMPONENT_H

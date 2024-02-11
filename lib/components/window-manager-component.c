@@ -24,7 +24,29 @@ Event *logic_WMC(Component *__wmc, int charInput)
   if (current == NULL)
     return NULL;
 
-  return current->component->proto->logic(current->component, charInput);
+  // handle event
+  Event *event = current->component->proto->logic(current->component, charInput);
+  if (event == NULL)
+    return NULL;
+
+  if (strcmp(event->name, "push") == 0)
+  {
+    wmc->push(wmc, event->payload);
+    return NULL;
+  }
+
+  if (strcmp(event->name, "pop") == 0)
+  {
+    StubWindow *winToDestroy = wmc->pop(wmc);
+    winToDestroy->destroy(winToDestroy);
+
+    StubWindow *currentWinNow = getTopWindow_WMC(wmc);
+    if (currentWinNow == NULL)
+      return NULL;
+    return currentWinNow->component->handleEvent(currentWinNow, (EventPayload *)event->payload);
+  }
+
+  return event;
 }
 
 void render_WMC(Component *__wmc)
@@ -71,7 +93,7 @@ Window *pop_WMC(WindowManagerComponent *wmc)
     return NULL;
 
   Window *win = getTopWindow_WMC(wmc);
-  wmc->cm->removeComponent(wmc->cm, wmc->cm->size - 1);
+  wmc->cm->size--; // really inefficient, TODO: implement stack logic
   return win;
 }
 
