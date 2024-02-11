@@ -17,6 +17,8 @@
 #include "text-input-component.h"
 #include "double-input-component.h"
 
+void init();
 void run(Component *__component);
+void cleanup();
 
 #endif // COMPONENTS_COMPONENTS_H

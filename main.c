@@ -5,10 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void init();
-void run(Component *__component);
-void cleanup();
-
 int main()
 {
   init();
@@ -19,19 +15,4 @@ int main()
 
   cleanup();
   return 0;
-}
-
-void init()
-{
-  initscr();
-  noecho();
-  cbreak();
-  keypad(stdscr, true);
-  curs_set(0);
-}
-
-void cleanup()
-{
-  standend();
-  endwin();
 }

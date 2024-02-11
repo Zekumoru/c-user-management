@@ -3,6 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+void init()
+{
+  initscr();
+  noecho();
+  cbreak();
+  keypad(stdscr, true);
+  curs_set(0);
+}
+
 void run(Component *__component)
 {
   StubComponent *component = (StubComponent *)__component;
@@ -40,4 +49,10 @@ void run(Component *__component)
   {
     event->destroy(event);
   }
+}
+
+void cleanup()
+{
+  standend();
+  endwin();
 }
