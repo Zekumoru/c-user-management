@@ -20,6 +20,9 @@ Event *handleEventInsertUserWindow(Window *__iuw, Event *event)
       Event *newUserEvent = createEvent("new-user", NULL, newUser);
       return createEvent("pop", NULL, newUserEvent);
     }
+
+    if (strcmp(mic->proto->id, "back") == 0)
+      return createEvent("pop", NULL, NULL);
   }
 
   return event;
@@ -65,6 +68,7 @@ InsertUserWindow *createInsertUserWindow()
   cm->addComponent(cm, iuw->wageInput);
 
   cm->addComponent(cm, createMenuItemComponent("Submit", "submit-user"));
+  cm->addComponent(cm, createMenuItemComponent("Back", "back"));
 
   return iuw;
 }
