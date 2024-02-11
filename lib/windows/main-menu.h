@@ -18,4 +18,6 @@ typedef struct MainMenuWindow
   MenuItemComponent *quitMenuItem;
 } MainMenuWindow;
 
+MainMenuWindow *createMainMenuWindowComponent();
+
 #endif // MAIN_MENU_WINDOW_H
