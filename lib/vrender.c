@@ -129,3 +129,22 @@ void vr_mvwprintw(WINDOW *win, int *virY, int *virX, const char *__format, ...)
   vrn_mvvwprintw(win, virY, virX, true, __format, args);
   va_end(args);
 }
+
+void vrmnv_mvvwprintw(WINDOW *win, int virY, int virX, int maxY, int maxX, bool autonl, const char *__format, va_list __args)
+{
+  vrmn_mvvwprintw(win, &virY, &virX, maxY, maxX, autonl, __format, __args);
+}
+
+void vrv_mvwprintw(WINDOW *win, int virY, int virX, const char *__format, ...)
+{
+  // get format arguments
+  va_list args;
+  va_start(args, __format);
+
+  int maxX;
+  int maxY;
+  getmaxyx(win, maxY, maxX);
+  vrmnv_mvvwprintw(win, virY, virX, maxY, maxX, true, __format, args);
+
+  va_end(args);
+}

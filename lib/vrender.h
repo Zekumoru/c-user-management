@@ -1,3 +1,13 @@
+/**
+ * Virtual Rendering Library
+ *
+ * Functions' prefixes:
+ *  - 'vr': virtual rendering
+ *  - 'm': max arguments
+ *  - 'n': newline?
+ *  - 'v': values (do not use pointers for virtual coords)
+ *
+ */
 #ifndef VRENDER_H
 #define VRENDER_H
 
@@ -125,7 +135,7 @@ void vrn_mvwprintw(WINDOW *win, int *virY, int *virX, bool autonl, const char *_
 
 /**
  * @brief Prints a formatted string to a specified window with virtualized
- *        coordinates, and the the format arguments obtained with va_list.
+ *        coordinates, and the format arguments obtained with va_list.
  *
  * This function is a wrapper for vrmn_mvvwprintw using va_list for
  * format arguments.
@@ -153,5 +163,36 @@ void vrn_mvvwprintw(WINDOW *win, int *virY, int *virX, bool autonl, const char *
  * @param ... Additional arguments for the format string.
  */
 void vr_mvwprintw(WINDOW *win, int *virY, int *virX, const char *__format, ...);
+
+/**
+ * @brief Prints a formatted string to a specified window, considering
+ *        virtualized coordinates (not pointers) and using va_list.
+ *
+ * This function is a wrapper for vrmn_mvwaddstr with the formatted string
+ * obtained using a va_list.
+ *
+ * @param win The target window.
+ * @param virY The virtual Y-coordinate.
+ * @param virX The virtual X-coordinate.
+ * @param maxY Maximum Y-coordinate of the window.
+ * @param maxX Maximum X-coordinate of the window.
+ * @param autonl If true, enables automatic newline at the end of the max
+ *               y-coordinate of the window.
+ * @param __format The format string.
+ * @param __args The va_list containing the format arguments.
+ */
+void vrmnv_mvvwprintw(WINDOW *win, int virY, int virX, int maxY, int maxX, bool autonl, const char *__format, va_list __args);
+
+/**
+ * @brief Prints a formatted string to a specified window with virtualized
+ *        coordinates without using virtual pointers.
+ *
+ * @param win The target window.
+ * @param virY The virtual Y-coordinate.
+ * @param virX The virtual X-coordinate.
+ * @param __format The format string.
+ * @param ... Additional arguments for the format string.
+ */
+void vrv_mvwprintw(WINDOW *win, int virY, int virX, const char *__format, ...);
 
 #endif // VRENDER_H
