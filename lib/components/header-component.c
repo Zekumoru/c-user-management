@@ -13,7 +13,8 @@ void renderHeaderComponent(Component *_hc)
 {
   HeaderComponent *hc = (HeaderComponent *)_hc;
   attron(A_BOLD);
-  printw("%s\n", hc->text);
+  preRenderComponent(hc);
+  renderComponent(hc, "%s", hc->text);
   attroff(A_BOLD);
 }
 

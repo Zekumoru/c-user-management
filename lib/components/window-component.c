@@ -40,10 +40,20 @@ void renderWindowComponent(Component *__wc)
   ComponentManager *cm = wc->cm;
   Component **components = cm->components;
 
+  preRenderComponent(wc);
   for (size_t i = 0; i < cm->size; i++)
   {
-    StubComponent *component = (StubComponent *)cm->components[i];
-    component->proto->render(component);
+    StubComponent *sc = (StubComponent *)cm->components[i];
+
+    // set screen xy from window component's render XY to component's screen XY
+    sc->proto->screenX = wc->proto->renderX;
+    sc->proto->screenY = wc->proto->renderY;
+
+    sc->proto->render(sc);
+
+    // Go to next line
+    preRenderComponent(wc);
+    wc->proto->renderY = sc->proto->renderY + 1;
   }
 
   // set cursor position on the screen (or hide it for that matter)

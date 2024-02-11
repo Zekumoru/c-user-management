@@ -113,14 +113,18 @@ Event *logicInputComponentPrototype(InputComponentPrototype *icp, Component *com
 void renderInputComponentPrototype(InputComponentPrototype *icp, Component *component)
 {
   ComponentPrototype *proto = ((StubComponent *)component)->proto;
-  printw("%s: ", icp->label);
+  preRenderComponent(component);
+
+  renderComponent(component, "%s: ", icp->label);
   size_t inputLength = strlen(icp->input);
 
   // print placeholder if input is empty
   if (inputLength == 0)
   {
-    getyx(stdscr, proto->setcurY, proto->setcurX);
-    printw("(%s)\n", icp->placeholder);
+    // TODO: turn these two lines below into a function
+    proto->setcurX = proto->renderX;
+    proto->setcurY = proto->renderY;
+    renderComponent(component, "(%s)", icp->placeholder);
     return;
   }
 
@@ -129,18 +133,18 @@ void renderInputComponentPrototype(InputComponentPrototype *icp, Component *comp
   {
     if (icp->curpos == i)
     {
-      getyx(stdscr, proto->setcurY, proto->setcurX);
+      proto->setcurX = proto->renderX;
+      proto->setcurY = proto->renderY;
     }
-    addch(icp->input[i]);
+    renderComponent(component, "%c", icp->input[i]);
   }
 
   // set cursor to end of value string if it is supposed to be there
   if (icp->curpos == inputLength)
   {
-    getyx(stdscr, proto->setcurY, proto->setcurX);
+    proto->setcurX = proto->renderX;
+    proto->setcurY = proto->renderY;
   }
-
-  addch('\n');
 }
 
 void destroyInputComponentPrototype(InputComponentPrototype *icp)

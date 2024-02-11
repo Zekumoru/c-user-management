@@ -18,18 +18,19 @@ Event *logicMenuItemComponent(Component *_mic, int charInput)
 void renderMenuItemComponent(Component *_mic)
 {
   MenuItemComponent *mic = (MenuItemComponent *)_mic;
+  preRenderComponent(mic);
 
   if (mic->proto->hasFocus)
   {
     attron(A_STANDOUT);
-    printw("->");
+    renderComponent(mic, "->");
   }
   else
   {
-    printw("  ");
+    renderComponent(mic, "  ");
   }
 
-  printw("%s\n", mic->text);
+  renderComponent(mic, "%s", mic->text);
 
   if (mic->proto->hasFocus)
   {

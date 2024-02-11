@@ -17,6 +17,17 @@ typedef struct ComponentPrototype
   // set cursor to these coordinates after all components have rendered
   int setcurX;
   int setcurY;
+  // screen coords where rendering begins
+  int screenX;
+  int screenY;
+  // screen coords where rendering ends
+  int screenMaxX;
+  int screenMaxY;
+  // screen coords used for rendering
+  int renderX;
+  int renderY;
+  // print newline characters?
+  bool autoNewline;
   Event *(*logic)(Component *, int);
   void (*render)(Component *);
   void (*destroyProto)(struct ComponentPrototype *);

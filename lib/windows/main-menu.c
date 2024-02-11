@@ -24,7 +24,7 @@ Event *handleEventMainMenuWindow(Window *__mmw, Event *event)
   if (strcmp(event->name, "new-user") == 0)
   {
     User *newUser = (User *)event->payload;
-    printf("New user: %s %s (Wage: %.2lf)\n", newUser->name, newUser->surname, newUser->wage);
+    printf("New user: %s %s (Wage: %.2lf)", newUser->name, newUser->surname, newUser->wage);
     destroyUser(newUser);
   }
 
