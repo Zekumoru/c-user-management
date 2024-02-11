@@ -74,7 +74,7 @@ void render_WMC(Component *__wmc)
 void destroy_WMC(Component *__wmc)
 {
   WindowManagerComponent *wmc = (WindowManagerComponent *)__wmc;
-  for (size_t i = 0; i < wmc->size; i++)
+  while (wmc->peek(wmc) != NULL)
   {
     StubWindow *window = (StubWindow *)wmc->pop(wmc);
     window->destroy(window);
@@ -108,11 +108,8 @@ void push_WMC(WindowManagerComponent *wmc, Window *win)
 
   // with size > 2
   WindowNode *newNode = createWindowNode(win);
-  WindowNode *current = wmc->head;
-  while (current->next != NULL)
-    current = current->next;
-  current->next = newNode;
-  newNode->prev = current;
+  wmc->tail->next = newNode;
+  newNode->prev = wmc->tail;
   wmc->tail = newNode;
   wmc->size++;
 }
