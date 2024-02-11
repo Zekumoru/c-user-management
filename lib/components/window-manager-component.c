@@ -41,8 +41,11 @@ Event *logic_WMC(Component *__wmc, int charInput)
     winToDestroy->destroy(winToDestroy);
 
     StubWindow *currentWinNow = getTopWindow_WMC(wmc);
+
+    // if no more windows then pass this "pop" event up
     if (currentWinNow == NULL)
-      return NULL;
+      return event;
+
     return currentWinNow->component->handleEvent(currentWinNow, (EventPayload *)event->payload);
   }
 
