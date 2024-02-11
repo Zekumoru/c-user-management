@@ -3,6 +3,15 @@
 
 #include "components.h"
 
+typedef struct WindowNode
+{
+  Window *win;
+  struct WindowNode *next;
+  struct WindowNode *prev;
+} WindowNode;
+
+WindowNode *createWindowNode(Window *win);
+
 /**
  * \brief A window manager component.
  *
@@ -15,9 +24,12 @@
 typedef struct WindowManagerComponent
 {
   ComponentPrototype *proto;
-  ComponentManager *cm;
+  WindowNode *head;
+  WindowNode *tail;
+  size_t size;
   void (*push)(struct WindowManagerComponent *, Window *);
   Window *(*pop)(struct WindowManagerComponent *);
+  Window *(*peek)(struct WindowManagerComponent *);
 } WindowManagerComponent;
 
 /**
