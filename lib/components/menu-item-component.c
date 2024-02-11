@@ -9,7 +9,7 @@ Event *logicMenuItemComponent(Component *_mic, int charInput)
 
   if (charInput == KEY_ENTER || charInput == ' ' || charInput == '\n' || charInput == '\r')
   {
-    return createEvent("click", mic, NULL); // TODO: Create click event
+    return createEvent("click", mic, NULL);
   }
 
   return NULL;
