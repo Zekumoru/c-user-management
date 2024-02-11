@@ -10,13 +10,12 @@ typedef struct MenuItemComponent
 {
   ComponentPrototype *proto;
   char *text;
-  Event *event;
 } MenuItemComponent;
 
 /**
  * \brief Creates a new menu item component.
  * \return A menu item component.
  */
-MenuItemComponent *createMenuItemComponent(char text[], const char eventName[]);
+MenuItemComponent *createMenuItemComponent(char text[], const char componentId[]);
 
 #endif // MENU_ITEM_COMPONENT_H

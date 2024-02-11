@@ -15,10 +15,8 @@
 typedef struct Event
 {
   char *name;
-  bool persistsPayload;
-  EventPayload *payload;
   Component *sender;
-  struct Event *(*clone)(struct Event *event);
+  EventPayload *payload;
   void (*destroy)(struct Event *event);
 } Event;
 
@@ -29,13 +27,5 @@ typedef struct Event
  * \return A new event.
  */
 Event *createEvent(const char name[], Component *sender, EventPayload *payload);
-
-/**
- * \brief Creates a new event without freeing the payload in memory.
- * \param name The name of the event.
- * \param payload Pointer to the extra data to pass in.
- * \return A new event.
- */
-Event *createPersistentEvent(const char name[], Component *sender, EventPayload *payload);
 
 #endif // EVENT_H

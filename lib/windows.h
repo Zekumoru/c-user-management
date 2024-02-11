@@ -2,7 +2,6 @@
 #define WINDOWS_H
 
 #include "components.h"
-#include "windows/insert-user.h"
 
 WindowComponent *createMainMenuWindowComponent();
 

@@ -13,13 +13,14 @@ typedef struct WindowComponent
 {
   ComponentPrototype *proto;
   ComponentManager *cm;
-  Event *(*handleEvent)(Event *event);
+  Window *__window; // this is set by createWindowComponent function
+  Event *(*handleEvent)(Window *window, Event *event);
 } WindowComponent;
 
 /**
  * \brief Create a new window component.
  * \return A window component.
  */
-WindowComponent *createWindowComponent();
+WindowComponent *createWindowComponent(Window *window);
 
 #endif // WINDOW_COMPONENT_H

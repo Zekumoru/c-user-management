@@ -3,15 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-Component *getTopComponent_WMC(WindowManagerComponent *wmc)
+Window *getTopWindow_WMC(WindowManagerComponent *wmc)
 {
   ComponentManager *cm = wmc->cm;
 
-  // if there are no components in the stack, return
+  // if there are no windows in the stack, return
   if (cm->size == 0)
     return NULL;
 
-  // get the component on the top of stack
+  // get the window on the top of stack
   return cm->components[cm->size - 1];
 }
 
@@ -19,12 +19,12 @@ Event *logic_WMC(Component *__wmc, int charInput)
 {
   WindowManagerComponent *wmc = (WindowManagerComponent *)__wmc;
 
-  // get the component on the top of stack, return if NULL
-  StubComponent *current = (StubComponent *)getTopComponent_WMC(wmc);
+  // get the window on the top of stack, return if NULL
+  StubWindow *current = (StubWindow *)getTopWindow_WMC(wmc);
   if (current == NULL)
     return NULL;
 
-  return current->proto->logic(current, charInput);
+  return current->component->proto->logic(current->component, charInput);
 }
 
 void render_WMC(Component *__wmc)
@@ -32,31 +32,47 @@ void render_WMC(Component *__wmc)
   WindowManagerComponent *wmc = (WindowManagerComponent *)__wmc;
 
   // get the component on the top of stack, return if NULL
-  StubComponent *current = (StubComponent *)getTopComponent_WMC(wmc);
+  StubWindow *current = (StubWindow *)getTopWindow_WMC(wmc);
   if (current == NULL)
     return;
 
-  current->proto->render(current);
+  current->component->proto->render(current->component);
 }
 
 void destroy_WMC(Component *__wmc)
 {
   WindowManagerComponent *wmc = (WindowManagerComponent *)__wmc;
-  wmc->cm->destroy(wmc->cm);
+
+  // Free windows from stack
+  // Very ugly approach, to be refactored in the future to not use
+  // ComponentManager but to implement the stack itself
+  ComponentManager *cm = wmc->cm;
+  for (size_t i = 0; i < cm->size; i++)
+  {
+    StubWindow *window = (StubWindow *)cm->components[i];
+    window->destroy(window);
+  }
+  free(cm->components);
+  free(cm);
+
   wmc->proto->destroyProto(wmc->proto);
   free(wmc);
 }
 
-void push_WMC(WindowManagerComponent *wmc, Component *component)
+void push_WMC(WindowManagerComponent *wmc, Window *__win)
 {
-  wmc->cm->addComponent(wmc->cm, component);
+  StubWindow *win = (StubWindow *)__win;
+  wmc->cm->addComponent(wmc->cm, win);
 }
 
-void pop_WMC(WindowManagerComponent *wmc)
+Window *pop_WMC(WindowManagerComponent *wmc)
 {
   if (wmc->cm->size == 0)
-    return;
+    return NULL;
+
+  Window *win = getTopWindow_WMC(wmc);
   wmc->cm->removeComponent(wmc->cm, wmc->cm->size - 1);
+  return win;
 }
 
 WindowManagerComponent *createWindowManagerComponent()

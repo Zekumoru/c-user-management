@@ -2,14 +2,15 @@
 #define COMPONENTS_COMPONENTS_H
 
 #define Component void
+#define Window void
 
 #include "event.h"
-#include "stub-payload.h"
 #include "component-manager.h"
 #include "component-prototype.h"
 #include "stub-component.h"
-#include "window-manager-component.h"
 #include "window-component.h"
+#include "stub-window.h"
+#include "window-manager-component.h"
 #include "header-component.h"
 #include "menu-item-component.h"
 #include "input-prototype-component.h"

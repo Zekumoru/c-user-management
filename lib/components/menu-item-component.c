@@ -9,7 +9,7 @@ Event *logicMenuItemComponent(Component *_mic, int charInput)
 
   if (charInput == KEY_ENTER || charInput == ' ' || charInput == '\n' || charInput == '\r')
   {
-    return mic->event->clone(mic->event);
+    return createEvent("click", mic, NULL);
   }
 
   return NULL;
@@ -40,17 +40,16 @@ void renderMenuItemComponent(Component *_mic)
 void destroyMenuItemComponent(Component *_mic)
 {
   MenuItemComponent *mic = (MenuItemComponent *)_mic;
-  mic->event->persistsPayload = false;
-  mic->event->destroy(mic->event);
   mic->proto->destroyProto(mic->proto);
   free(mic->text);
   free(mic);
 }
 
-MenuItemComponent *createMenuItemComponent(char text[], const char eventName[])
+MenuItemComponent *createMenuItemComponent(char text[], const char componentId[])
 {
   MenuItemComponent *mic = malloc(sizeof(MenuItemComponent));
   mic->proto = createComponentPrototype();
+  mic->proto->id = strdup(componentId);
   mic->proto->type = strdup("MenuItemComponent");
   mic->proto->focusable = true;
   mic->proto->hasFocus = false;
@@ -58,6 +57,5 @@ MenuItemComponent *createMenuItemComponent(char text[], const char eventName[])
   mic->proto->render = renderMenuItemComponent;
   mic->proto->destroy = destroyMenuItemComponent;
   mic->text = strdup(text);
-  mic->event = createPersistentEvent(eventName, mic, NULL);
   return mic;
 }
