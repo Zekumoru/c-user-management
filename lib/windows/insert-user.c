@@ -38,7 +38,7 @@ void destroyInsertUserWindow(Window *__iuw)
 
 bool validateAlphaOnly(char *input, int charInput)
 {
-  return isalpha(charInput) || charInput == ' ';
+  return isalpha(charInput) || charInput == ' ' || charInput == '\'';
 }
 
 InsertUserWindow *createInsertUserWindow()
@@ -56,6 +56,7 @@ InsertUserWindow *createInsertUserWindow()
 
   // Setup name text input component
   iuw->nameInput = createTextInputComponent("Name", "name here", "");
+  iuw->nameInput->ic_proto->customValidator = validateAlphaOnly;
   cm->addComponent(cm, iuw->nameInput);
 
   // Setup surname text input component
