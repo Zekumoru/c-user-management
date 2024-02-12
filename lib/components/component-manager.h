@@ -12,7 +12,7 @@ typedef struct ComponentManager
   Component **components;
   size_t size;
   size_t allocSize;
-  size_t indexFocusedComponent;
+  int indexFocusedComponent;
   void (*addComponent)(struct ComponentManager *cm, Component *component);
   bool (*removeComponent)(struct ComponentManager *cm, size_t indexToRemove);
   bool (*focusComponent)(struct ComponentManager *cm, size_t index);

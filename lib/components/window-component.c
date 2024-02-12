@@ -11,9 +11,13 @@ Event *logicWindowComponent(Component *__wc, int charInput)
   WindowComponent *wc = (WindowComponent *)__wc;
   ComponentManager *cm = wc->cm;
   int index = cm->indexFocusedComponent;
-  StubComponent *focusedComponent = (StubComponent *)cm->components[index];
 
-  Event *event = focusedComponent->proto->logic(focusedComponent, charInput);
+  Event *event = NULL;
+  if (index >= 0)
+  {
+    StubComponent *focusedComponent = (StubComponent *)cm->components[index];
+    event = focusedComponent->proto->logic(focusedComponent, charInput);
+  }
 
   switch (charInput)
   {
@@ -57,17 +61,20 @@ void renderWindowComponent(Component *__wc)
   }
 
   // set cursor position on the screen (or hide it for that matter)
-  StubComponent *focusedComponent = (StubComponent *)cm->components[cm->indexFocusedComponent];
-  int setcurX = focusedComponent->proto->setcurX;
-  int setcurY = focusedComponent->proto->setcurY;
-  if (setcurX >= 0 && setcurY >= 0)
+  if (cm->indexFocusedComponent >= 0)
   {
-    curs_set(1);
-    move(setcurY, setcurX);
-  }
-  else
-  {
-    curs_set(0);
+    StubComponent *focusedComponent = (StubComponent *)cm->components[cm->indexFocusedComponent];
+    int setcurX = focusedComponent->proto->setcurX;
+    int setcurY = focusedComponent->proto->setcurY;
+    if (setcurX >= 0 && setcurY >= 0)
+    {
+      curs_set(1);
+      move(setcurY, setcurX);
+    }
+    else
+    {
+      curs_set(0);
+    }
   }
 }
 

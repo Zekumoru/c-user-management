@@ -14,6 +14,7 @@
 #include "stub-window.h"
 #include "window-manager-component.h"
 #include "header-component.h"
+#include "scrollable-component.h"
 #include "menu-item-component.h"
 #include "input-prototype-component.h"
 #include "text-input-component.h"
